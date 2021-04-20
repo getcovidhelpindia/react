@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import Navbar from './components/Navbar';
+import { retry } from './utils/commonFunctions';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { lazy, useState, Suspense, useEffect } from 'react';
+import { Route, Redirect, Switch, useLocation } from 'react-router-dom';
+import useDarkMode from 'use-dark-mode';
+
+const Home = lazy(() => retry(() => import('./Page')));
+const About = lazy(() => retry(() => import('./Page2')));
+//const State = lazy(() => retry(() => import('./components/State')));
+
+const App = () => {
+	const darkMode = useDarkMode(false);
+	const location = useLocation();
+
+	const pages = [
+		{
+			pageLink: '/',
+			view: Home,
+			displayName: 'Home',
+			showInNavbar: true,
+		},
+		{
+			pageLink: '/blog',
+			view: About,
+			displayName: 'Blog',
+			showInNavbar: true,
+		},
+	];
+
+	return (
+		<div className="App">
+			<Navbar pages={pages} {...{ darkMode }} />
+
+			<Suspense fallback={<div />}>
+				<Switch location={location}>
+					{pages.map((page, index) => {
+						return <Route exact path={page.pageLink} render={({ match }) => <page.view />} key={index} />;
+					})}
+					<Redirect to="/" />
+				</Switch>
+			</Suspense>
+		</div>
+	);
+};
 
 export default App;
