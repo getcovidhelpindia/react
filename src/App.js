@@ -7,7 +7,7 @@ import { Route, Redirect, Switch, useLocation } from 'react-router-dom';
 import useDarkMode from 'use-dark-mode';
 
 const Home = lazy(() => retry(() => import('./Page')));
-const About = lazy(() => retry(() => import('./Page2')));
+const AddInfo = lazy(() => retry(() => import('./AddInfo')));
 //const State = lazy(() => retry(() => import('./components/State')));
 
 const App = () => {
@@ -22,9 +22,9 @@ const App = () => {
 			showInNavbar: true,
 		},
 		{
-			pageLink: '/blog',
-			view: About,
-			displayName: 'Blog',
+			pageLink: '/addInfo',
+			view: AddInfo,
+			displayName: 'Add Info',
 			showInNavbar: true,
 		},
 	];
@@ -36,7 +36,9 @@ const App = () => {
 			<Suspense fallback={<div />}>
 				<Switch location={location}>
 					{pages.map((page, index) => {
-						return <Route exact path={page.pageLink} render={({ match }) => <page.view />} key={index} />;
+						return (
+							<Route exact path={page.pageLink} render={({ match }) => <page.view darkMode={darkMode} />} key={index} />
+						);
 					})}
 					<Redirect to="/" />
 				</Switch>

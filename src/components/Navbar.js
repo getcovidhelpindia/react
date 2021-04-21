@@ -34,7 +34,9 @@ function Navbar({ pages, darkMode }) {
 		<animated.div className="Navbar" {...{ style }}>
 			<div className="navbar-middle">
 				<Link to="/" onClick={setExpand.bind(this, false)}>
-					Covid19<span>India</span>
+					Get COVIDHelp
+					<br />
+					<span>India</span>
 				</Link>
 			</div>
 
@@ -54,14 +56,9 @@ function Navbar({ pages, darkMode }) {
 								<Home {...activeNavIcon('/')} />
 							</span>
 						</Link>
-						<Link to="/blog">
+						<Link to="/addInfo">
 							<span>
-								<Book {...activeNavIcon('/blog')} />
-							</span>
-						</Link>
-						<Link to="/about">
-							<span>
-								<HelpCircle {...activeNavIcon('/about')} />
+								<Book {...activeNavIcon('/addInfo')} />
 							</span>
 						</Link>
 						<span>
@@ -112,7 +109,7 @@ function Expand({ pages, setExpand, darkMode, windowSize }) {
 			{windowSize.width < 768 && <SunMoon {...{ darkMode }} />}
 
 			<div className="expand-bottom">
-				<h5>{'A crowdsourced initiative.'}</h5>
+				<h5>{'A volunteer aggregation initiative to aid in combating COVID-19 in India.'}</h5>
 			</div>
 		</div>
 	);

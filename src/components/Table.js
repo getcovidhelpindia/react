@@ -4,11 +4,15 @@ import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-import useDarkMode from 'use-dark-mode';
-
+import InfoCellRenderer from './InfoCellRenderer';
 const Table = () => {
 	const [gridApi, setGridApi] = useState(null);
 	const [gridColumnApi, setGridColumnApi] = useState(null);
+	const markdown = `A paragraph with *emphasis* and **strong importance**.
+
+> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
+
+`;
 
 	const [rowData, setRowData] = useState([]);
 
@@ -19,36 +23,46 @@ const Table = () => {
 	} catch (err) {}
 
 	useEffect(() => {
-		fetch('https://www.ag-grid.com/example-assets/row-data.json')
-			.then((result) => result.json())
-			.then((rowData) => setRowData(rowData));
+		const payload = {
+			type: '3',
+			prefix: 'bihar',
+		};
+		const requestOptions = {
+			method: 'POST',
+			body: JSON.stringify(payload),
+		};
+		fetch('https://api.getcovidhelp.in/getData', requestOptions)
+			.then((res) => res.json())
+			.then((result) => setRowData(result.data));
 	}, []);
 	function AgGridTab() {
 		return (
-			<AgGridReact rowData={rowData}>
-				<AgGridColumn field="make" filter={true} sortable={true}></AgGridColumn>
-				<AgGridColumn field="model"></AgGridColumn>
-				<AgGridColumn field="price" sortable={true}></AgGridColumn>
-				<AgGridColumn field="price"></AgGridColumn>
-				<AgGridColumn field="price"></AgGridColumn>
-				<AgGridColumn field="price"></AgGridColumn>
-				<AgGridColumn field="make"></AgGridColumn>
-				<AgGridColumn field="model"></AgGridColumn>
-				<AgGridColumn field="price"></AgGridColumn>
+			<AgGridReact
+				rowData={rowData}
+				rowHeight={300}
+				frameworkComponents={{
+					infoCellRenderer: InfoCellRenderer,
+				}}
+			>
+				<AgGridColumn field="state" filter={true} sortable={true}></AgGridColumn>
+				<AgGridColumn field="info" wrapText={true} cellRenderer="infoCellRenderer"></AgGridColumn>
+				<AgGridColumn field="type" sortable={true}></AgGridColumn>
+				<AgGridColumn field="createdAt"></AgGridColumn>
+				<AgGridColumn field="district"></AgGridColumn>
 			</AgGridReact>
 		);
 	}
 	return localStorageTheme ? (
 		<div
 			className="ag-theme-alpine-dark"
-			style={{ height: '20rem', width: '80%', marginLeft: '10%', marginTop: '2%', marginRight: '5%' }}
+			style={{ height: '40rem', width: '85%', marginLeft: '10%', marginTop: '2%', marginRight: '3%' }}
 		>
 			<AgGridTab />
 		</div>
 	) : (
 		<div
 			className="ag-theme-alpine"
-			style={{ height: '20rem', width: '80%', marginLeft: '10%', marginTop: '2%', marginRight: '5%' }}
+			style={{ height: '40rem', width: '85%', marginLeft: '10%', marginTop: '2%', marginRight: '3%' }}
 		>
 			<agGrid />
 		</div>
