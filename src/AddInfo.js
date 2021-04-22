@@ -112,7 +112,7 @@ export default function MultilineTextFields({ darkMode }) {
 			const payload = {
 				state: StateAndDistrict.states[indiaState].state,
 				district: StateAndDistrict.states[indiaState].districts[indiaDistrict],
-				type: resourceType.toString(),
+				type: resourceType,
 				info: {
 					name: name,
 					contact: contact,
@@ -123,7 +123,7 @@ export default function MultilineTextFields({ darkMode }) {
 				createdAt: new Date(),
 				isApproved: true,
 				isFlagged: false,
-				Usefulness: 0,
+				usefulness: 0,
 				isHidden: false,
 			};
 			console.log(JSON.stringify(payload));
@@ -135,7 +135,7 @@ export default function MultilineTextFields({ darkMode }) {
 				.then((res) => res.json())
 				.then((result) => {
 					console.log('response', result);
-					if (result.success === 'true') {
+					if (result.success) {
 						setLoading(false);
 						setSuccess(true);
 						setTimeout(() => {
