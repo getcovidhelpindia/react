@@ -8,6 +8,7 @@ import useDarkMode from 'use-dark-mode';
 
 const Home = lazy(() => retry(() => import('./Page')));
 const AddInfo = lazy(() => retry(() => import('./AddInfo')));
+const About = lazy(() => retry(() => import('./components/About')));
 //const State = lazy(() => retry(() => import('./components/State')));
 
 const App = () => {
@@ -25,6 +26,12 @@ const App = () => {
 			pageLink: '/addInfo',
 			view: AddInfo,
 			displayName: 'Add Info',
+			showInNavbar: true,
+		},
+		{
+			pageLink: '/about',
+			view: About,
+			displayName: 'About',
 			showInNavbar: true,
 		},
 	];

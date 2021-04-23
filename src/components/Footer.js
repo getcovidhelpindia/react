@@ -1,5 +1,7 @@
 import { memo } from 'react';
-import { Twitter, GitHub, Instagram } from 'react-feather';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faDiscord, faInstagram, faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
 
 function Footer() {
 	return (
@@ -11,23 +13,26 @@ function Footer() {
 			<h5>{'Let us collaborate to help each other in this pandemic'}</h5>
 
 			<div className="links">
-				<a href="https://github.com/getcovidhelpindia" className="github" target="_blank" rel="noopener noreferrer">
-					<GitHub />
+				<a href="https://github.com/getcovidhelpindia" target="_blank" rel="noopener noreferrer">
+					<FontAwesomeIcon icon={faGithub} />
 				</a>
 
-				<a href="https://twitter.com/indiacovidhelp" target="_blank" rel="noopener noreferrer" className="twitter">
-					<Twitter />
+				<a href="https://twitter.com/indiacovidhelp" target="_blank" rel="noopener noreferrer">
+					<FontAwesomeIcon icon={faTwitter} />
 				</a>
 
-				<a
-					href="https://www.instagram.com/india.covidhelp/"
-					target="_blank"
-					rel="noopener noreferrer"
-					className="instagram"
-				>
-					<Instagram />
+				<a href="https://www.instagram.com/india.covidhelp/" target="_blank" rel="noopener noreferrer">
+					<FontAwesomeIcon icon={faInstagram} />
+				</a>
+
+				<a href="http://discord.getcovidhelp.in/" target="_blank" rel="noopener noreferrer">
+					<FontAwesomeIcon icon={faDiscord} />
 				</a>
 			</div>
+			<br />
+			<h5>
+				Based on the works of <a href="http://covid19india.org">covid19india.org</a>
+			</h5>
 		</footer>
 	);
 }

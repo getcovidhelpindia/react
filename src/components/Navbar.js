@@ -1,7 +1,7 @@
 import { SLIDE_IN, SLIDE_OUT, SLIDE_IN_MOBILE, SLIDE_OUT_MOBILE } from '../animations';
 
 import { useState, useCallback, useRef } from 'react';
-import { Book, HelpCircle, Home, Moon, Sun } from 'react-feather';
+import { FilePlus, HelpCircle, Home, Moon, Sun } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useTransition, animated } from 'react-spring';
 import { useLockBodyScroll, useWindowSize } from 'react-use';
@@ -32,7 +32,7 @@ function Navbar({ pages, darkMode }) {
 
 	return navbarTransition((style, item) => (
 		<animated.div className="Navbar" {...{ style }}>
-			<div className="navbar-middle">
+			<div className="navbar-middle" style={{ paddingTop: '1rem', paddingLeft: '0.5rem' }}>
 				<Link to="/" onClick={setExpand.bind(this, false)}>
 					Get COVIDHelp
 					<br />
@@ -58,7 +58,12 @@ function Navbar({ pages, darkMode }) {
 						</Link>
 						<Link to="/addInfo">
 							<span>
-								<Book {...activeNavIcon('/addInfo')} />
+								<FilePlus {...activeNavIcon('/addInfo')} />
+							</span>
+						</Link>
+						<Link to="/about">
+							<span>
+								<HelpCircle {...activeNavIcon('/about')} />
 							</span>
 						</Link>
 						<span>

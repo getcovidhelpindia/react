@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 	formControl: {
 		margin: theme.spacing(1),
 		minWidth: 120,
-		display: 'flex',
 	},
 	selectEmpty: {
 		marginTop: theme.spacing(2),
@@ -78,6 +77,7 @@ const Table = ({ darkMode }) => {
 	const [gridApi, setGridApi] = useState(null);
 	const [gridColumnApi, setGridColumnApi] = useState(null);
 	const [indiaState, setIndiaState] = React.useState(-1);
+	const [resourceType, setResourceType] = React.useState(-1);
 	const onGridReady = (params) => {
 		setGridApi(params.api);
 		setGridColumnApi(params.columnApi);
@@ -93,6 +93,9 @@ const Table = ({ darkMode }) => {
 
 	const handleChangeState = (event) => {
 		setIndiaState(event.target.value);
+	};
+	const handleChangeResourceType = (event) => {
+		setResourceType(event.target.value);
 	};
 
 	const onSelectionChanged = (event) => {
@@ -134,14 +137,14 @@ const Table = ({ darkMode }) => {
 
 	useEffect(() => {
 		const payload = {
-			type: 3,
+			type: resourceType,
 			prefix: StateAndDistrict?.states[indiaState]?.state.toLowerCase(),
 		};
 		const requestOptions = {
 			method: 'POST',
 			body: JSON.stringify(payload),
 		};
-		if (indiaState >= 0) {
+		if (indiaState >= 0 && resourceType >= 0) {
 			setRowData(null);
 			fetch('https://api.getcovidhelp.in/getData', requestOptions)
 				.then((res) => res.json())
@@ -157,12 +160,12 @@ const Table = ({ darkMode }) => {
 					console.log('rowData', result.data);
 				});
 		}
-	}, [indiaState]);
+	}, [indiaState, resourceType]);
 	function AgGridTab() {
 		const classes = useStyles();
 		return (
 			<>
-				<ThemeProvider theme={themeConfig}>
+				<ThemeProvider theme={themeConfig} style={{ height: '100rem' }}>
 					<FormControl required variant="outlined" className={classes.formControl}>
 						<InputLabel id="demo-simple-select-required-label">State</InputLabel>
 						<Select
@@ -182,82 +185,95 @@ const Table = ({ darkMode }) => {
 						<FormHelperText>Required</FormHelperText>
 					</FormControl>
 					<FormControl required variant="outlined" className={classes.formControl}>
-						<InputLabel id="demo-simple-select-required-label">State</InputLabel>
+						<InputLabel id="demo-simple-select-required-label">Resources</InputLabel>
 						<Select
 							labelId="demo-simple-select-required-label"
 							id="demo-simple-select-required"
-							value={indiaState}
-							onChange={handleChangeState}
+							value={resourceType}
+							onChange={handleChangeResourceType}
 							className={classes.selectEmpty}
 						>
 							<MenuItem value={-1}>
 								<em>None</em>
 							</MenuItem>
-							{StateAndDistrict.states.map((item, index) => (
-								<MenuItem value={index}>{item.state}</MenuItem>
-							))}
+							<MenuItem value={0}>Oxygen</MenuItem>
+							<MenuItem value={1}>Medicines</MenuItem>
+							<MenuItem value={2}>Plasma Donor</MenuItem>
+							<MenuItem value={3}>Hospital Bed</MenuItem>
+							<MenuItem value={4}>Testing Facility</MenuItem>
 						</Select>
 						<FormHelperText>Required</FormHelperText>
 					</FormControl>
 				</ThemeProvider>
-				<AgGridReact
-					rowData={rowData}
-					suppressRowClickSelection={true}
-					rowSelection={'multiple'}
-					onSelectionChanged={onSelectionChanged}
-					frameworkComponents={{
-						infoCellRenderer: InfoCellRenderer,
-						createdAtCellRenderer: CreatedAtCellRenderer,
-						// shareCellRenderer: ShareCellRenderer,
-					}}
-				>
-					<AgGridColumn
-						field="district"
-						filter="agTextColumnFilter"
-						floatingFilter={true}
-						sortable={true}
-						checkboxSelection={true}
+				<div style={{ height: '100vh' }}>
+					<AgGridReact
+						rowData={rowData}
+						suppressRowClickSelection={true}
+						rowSelection={'multiple'}
+						onSelectionChanged={onSelectionChanged}
+						frameworkComponents={{
+							infoCellRenderer: InfoCellRenderer,
+							createdAtCellRenderer: CreatedAtCellRenderer,
+							// shareCellRenderer: ShareCellRenderer,
+						}}
+					>
+						<AgGridColumn
+							field="district"
+							filter="agTextColumnFilter"
+							floatingFilter={true}
+							sortable={true}
+							checkboxSelection={true}
 
-						// valueGetter={customValueGetter}
-					></AgGridColumn>
-					{/* <AgGridColumn
+							// valueGetter={customValueGetter}
+						></AgGridColumn>
+						{/* <AgGridColumn
 						field="isSelected"
 						cellRenderer="shareCellRenderer"
 						// valueSetter={customValueSetter}
 					></AgGridColumn> */}
-					<AgGridColumn
-						field="info"
-						wrapText={true}
-						// cellRenderer="infoCellRenderer"
-						minWidth={150}
-						flex={1}
-						filter="agTextColumnFilter"
-						floatingFilter={true}
-						sortable={true}
-						autoHeight={true}
-					></AgGridColumn>
-					<AgGridColumn
-						field="contact"
-						filter="agTextColumnFilter"
-						floatingFilter={true}
-						sortable={true}
-						wrapText={true}
-						autoHeight={true}
-					></AgGridColumn>
-					<AgGridColumn
-						field="createdAt"
-						cellRenderer="createdAtCellRenderer"
-						filter="agTextColumnFilter"
-						floatingFilter={true}
-						sortable={true}
-					></AgGridColumn>
-				</AgGridReact>
+						<AgGridColumn
+							field="info"
+							wrapText={true}
+							// cellRenderer="infoCellRenderer"
+							minWidth={150}
+							flex={1}
+							filter="agTextColumnFilter"
+							floatingFilter={true}
+							sortable={true}
+							autoHeight={true}
+						></AgGridColumn>
+						<AgGridColumn
+							field="contact"
+							filter="agTextColumnFilter"
+							floatingFilter={true}
+							sortable={true}
+							wrapText={true}
+							autoHeight={true}
+						></AgGridColumn>
+						<AgGridColumn
+							field="createdAt"
+							cellRenderer="createdAtCellRenderer"
+							filter="agTextColumnFilter"
+							floatingFilter={true}
+							sortable={true}
+						></AgGridColumn>
+					</AgGridReact>
+				</div>
 			</>
 		);
 	}
 	return (
 		<div
-			style={{ height: '40rem', width: '85%', marginLeft: '10%', marginTop: '2%', marginRight: '3%' }}
+			style={{
+				// display: 'flex',
+				// flexDirection: 'column',
+				minHeight: '40rem',
+				width: '85%',
+				marginLeft: '10%',
+				marginTop: '2%',
+				marginBottom: '5%',
+				marginRight: '3%',
+			}}
 			className={darkThemeClassState}
 		>
 			<AgGridTab />
