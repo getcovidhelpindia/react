@@ -156,7 +156,10 @@ const Table = ({ darkMode }) => {
 						item.isSelected = 0;
 						return item;
 					});
-					setRowData(result.data);
+					const approvedData = result.data.filter((value, index, arr) => {
+						return value.isApproved;
+					});
+					setRowData(approvedData);
 					console.log('rowData', result.data);
 				});
 		}
