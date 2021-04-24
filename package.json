@@ -26,6 +26,7 @@
     "react-scripts": "4.0.3",
     "react-spring": "^9.1.1",
     "react-use": "^17.2.3",
+    "rehype-raw": "^5.1.0",
     "remark-gfm": "^1.0.0",
     "use-dark-mode": "^2.3.1",
     "web-vitals": "^1.0.1"

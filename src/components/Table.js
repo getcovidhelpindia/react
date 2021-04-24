@@ -79,8 +79,8 @@ const Table = ({ darkMode }) => {
 	const [indiaState, setIndiaState] = React.useState(-1);
 	const [resourceType, setResourceType] = React.useState(-1);
 	const onGridReady = (params) => {
-		setGridApi(params.api);
-		setGridColumnApi(params.columnApi);
+		console.log('rowheight', params);
+		params.api.resetRowHeights();
 	};
 	const theme = {
 		palette: {
@@ -102,10 +102,12 @@ const Table = ({ darkMode }) => {
 		shareArray = event.api.getSelectedNodes();
 	};
 
-	// const customValueGetter = (params) => {
-	// 	console.log(params.node.data.info);
-	// 	return 'A';
-	// };
+	const customValueGetter = (params) => {
+		return params.node.data.info;
+	};
+	const customValueGetterContact = (params, info) => {
+		return params.node.data.contact;
+	};
 
 	// const customValueSetter = (params) => {
 	// 	console.log(params);
@@ -150,7 +152,7 @@ const Table = ({ darkMode }) => {
 				.then((res) => res.json())
 				.then((result) => {
 					result.data.map((item) => {
-						item.contact = `${item.info.name} \n ${item.info.contact} \n ${item.info.location}`;
+						item.contact = `${item.info.name} <br/> <a href=tel:${item.info.contact}>${item.info.contact}</a> <br/> ${item.info.location}`;
 						item.info = item.info.description;
 						console.log(item.contact);
 						item.isSelected = 0;
@@ -213,7 +215,9 @@ const Table = ({ darkMode }) => {
 						rowData={rowData}
 						suppressRowClickSelection={true}
 						rowSelection={'multiple'}
+						rowHeight={200}
 						onSelectionChanged={onSelectionChanged}
+						// onGridReady={onGridReady}
 						frameworkComponents={{
 							infoCellRenderer: InfoCellRenderer,
 							createdAtCellRenderer: CreatedAtCellRenderer,
@@ -226,8 +230,6 @@ const Table = ({ darkMode }) => {
 							floatingFilter={true}
 							sortable={true}
 							checkboxSelection={true}
-
-							// valueGetter={customValueGetter}
 						></AgGridColumn>
 						{/* <AgGridColumn
 						field="isSelected"
@@ -237,28 +239,36 @@ const Table = ({ darkMode }) => {
 						<AgGridColumn
 							field="info"
 							wrapText={true}
-							// cellRenderer="infoCellRenderer"
 							minWidth={150}
-							flex={1}
+							flex={5}
 							filter="agTextColumnFilter"
+							valueGetter={customValueGetter}
+							cellRenderer="infoCellRenderer"
+							editable={true}
 							floatingFilter={true}
 							sortable={true}
-							autoHeight={true}
+							cellEditor="agLargeTextCellEditor"
+							// autoHeight={true}
 						></AgGridColumn>
 						<AgGridColumn
 							field="contact"
 							filter="agTextColumnFilter"
 							floatingFilter={true}
 							sortable={true}
+							editable={true}
 							wrapText={true}
-							autoHeight={true}
+							flex={4}
+							cellEditor="agLargeTextCellEditor"
+							// autoHeight={true}
+							valueGetter={customValueGetterContact}
+							cellRenderer="infoCellRenderer"
 						></AgGridColumn>
 						<AgGridColumn
 							field="createdAt"
 							cellRenderer="createdAtCellRenderer"
-							filter="agTextColumnFilter"
-							floatingFilter={true}
-							sortable={true}
+							// filter="agTextColumnFilter"
+							// floatingFilter={true}
+							// sortable={true}
 						></AgGridColumn>
 					</AgGridReact>
 				</div>

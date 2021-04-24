@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
+import rehypeRaw from 'rehype-raw';
 
 const useStyles = makeStyles({
 	root: {
@@ -28,7 +29,11 @@ const InfoCellRenderer = (props) => {
 	// ${cellValue.location}
 	// `;
 
-	// 	return <ReactMarkdown remarkPlugins={[gfm]} children={markdown} />;
+	return (
+		<div style={{ height: '100' }}>
+			<ReactMarkdown remarkPlugins={[gfm]} rehypePlugins={[rehypeRaw]} children={cellValue} skipHtml={true} />
+		</div>
+	);
 };
 
 const customValueSetter = (params) => {

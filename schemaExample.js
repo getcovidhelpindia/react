@@ -12,7 +12,7 @@ const fields = {
 	verifiedAt: Date,
 	createdAt: Date,
 	isApproved: Boolean,
-	Flagged: Number,
-	Usefulness: Number,
+	flagged: Number,
+	usefulness: Number,
 	isHidden: Boolean,
 };
