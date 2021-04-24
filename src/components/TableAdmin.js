@@ -156,10 +156,7 @@ const Table = ({ darkMode }) => {
 						item.isSelected = 0;
 						return item;
 					});
-					const approvedData = result.data.filter((value, index, arr) => {
-						return value.isApproved;
-					});
-					setRowData(approvedData);
+					setRowData(result.data);
 					console.log('rowData', result.data);
 				});
 		}
@@ -226,8 +223,6 @@ const Table = ({ darkMode }) => {
 							floatingFilter={true}
 							sortable={true}
 							checkboxSelection={true}
-
-							// valueGetter={customValueGetter}
 						></AgGridColumn>
 						{/* <AgGridColumn
 						field="isSelected"
@@ -256,6 +251,29 @@ const Table = ({ darkMode }) => {
 						<AgGridColumn
 							field="createdAt"
 							cellRenderer="createdAtCellRenderer"
+							filter="agTextColumnFilter"
+							floatingFilter={true}
+							sortable={true}
+						></AgGridColumn>
+						<AgGridColumn
+							field="isApproved"
+							filter="agTextColumnFilter"
+							floatingFilter={true}
+							sortable={true}
+							editable={true}
+							cellEditor="agSelectCellEditor"
+							cellEditorParams={{
+								values: [true, false],
+							}}
+						></AgGridColumn>
+						<AgGridColumn
+							field="verifiedAt"
+							filter="agTextColumnFilter"
+							floatingFilter={true}
+							sortable={true}
+						></AgGridColumn>
+						<AgGridColumn
+							field="isHidden"
 							filter="agTextColumnFilter"
 							floatingFilter={true}
 							sortable={true}
