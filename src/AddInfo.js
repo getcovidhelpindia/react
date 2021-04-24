@@ -175,16 +175,17 @@ export default function MultilineTextFields({ darkMode }) {
 	const themeConfig = createMuiTheme(theme);
 
 	return (
-		<>
+		<div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
 			<ThemeProvider theme={themeConfig}>
 				<div
 					style={{
-						height: '30rem',
+						height: '40rem',
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'left',
 						marginLeft: '10%',
 						marginTop: '2%',
+						marginBottom: '10%',
 					}}
 				>
 					<div>
@@ -306,9 +307,15 @@ export default function MultilineTextFields({ darkMode }) {
 							{loading && <CircularProgress size={24} className={classes.buttonProgress} />}
 						</div>
 					</div>
+					<div>
+						<p>
+							Data once added is approved by one of the team members before it comes on website. To know more, visit{' '}
+							<a href="/about">About Section</a>
+						</p>
+					</div>
 				</div>
 			</ThemeProvider>
-			<Footer />
-		</>
+			<Footer style={{ top: 'auto' }} />
+		</div>
 	);
 }

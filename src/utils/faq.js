@@ -13,6 +13,12 @@ export const FAQ = {
 		},
 		{
 			answer:
+				'Once you add data via the form, one of our team members approves it before it comes on the website. This is done to mitigate against spam and dummy entries. If you want to add bulk data, kindly join our Discord server and we can get it done by the team.',
+			qno: '3',
+			question: 'How does the Add Data work?',
+		},
+		{
+			answer:
 				'The project is opensourced and welcoming contributors at <a href="https://github.com/getcovidhelpindia" target="_blank">github.com/getcovidhelpindia</a>',
 			qno: '4',
 			question: 'Where can I find the source code for this?',
@@ -31,7 +37,7 @@ export const FAQ = {
 		},
 		{
 			answer:
-				'We need volunteers who can help us stregthen this initiative together. We need help in terms of Data Collection, Data Verification, Front-End and Back-End Development, Social Media to name a few. We would be grateful if you join to help us. Join us at: <a href="http://discord.getcovidhelp.in/" target="_blank">discord.getcovidhelp.in/</a>',
+				'We need volunteers who can help us stregthen this initiative together. We would be delighted if you could add relavant data to this initiative via Add Info. We need help in terms of Data Collection, Data Verification, Front-End and Back-End Development, Social Media to name a few. We would be grateful if you join to help us. Join us at: <a href="http://discord.getcovidhelp.in/" target="_blank">discord.getcovidhelp.in/</a>',
 			qno: '7',
 			question: 'How can I help?',
 		},
