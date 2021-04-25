@@ -11,7 +11,7 @@ import { green, red } from '@material-ui/core/colors';
 import clsx from 'clsx';
 
 // Components
-import { Layout, CustomTextInput, SelectStateDisctrict } from 'components';
+import { Layout, SelectStateDisctrict, ResourceInfo } from 'components';
 
 // Hooks
 import { useInput, useSwitch } from 'hooks';
@@ -130,67 +130,21 @@ const AddInfo = ({ darkMode }) => {
             }}
           />
 
-          <form
-            className={classes.root}
-            noValidate
-            autoComplete='off'
-            onSubmit={handleSubmitForm}
-          >
-            <div className={classes.formRow1}>
-              <CustomTextInput
-                label='Name'
-                value={name}
-                onChange={setName}
-                variant='outlined'
-                required
-                className={classes.selectEmpty}
-                style={{ width: '19.2%' }}
-              />
-              <CustomTextInput
-                label='Contact'
-                value={contact}
-                onChange={setContact}
-                variant='outlined'
-                required
-                className={classes.selectEmpty}
-                style={{ width: '19.2%' }}
-              />
-              <CustomTextInput
-                label='Location'
-                value={location}
-                onChange={setLocation}
-                variant='outlined'
-                required
-                className={classes.selectEmpty}
-                style={{ width: '19.2%' }}
-              />
-            </div>
-
-            <div className={classes.row2}>
-              <CustomTextInput
-                label='Information'
-                value={info}
-                onChange={setInfo}
-                variant='outlined'
-                required
-                multiline
-                fullWidth
-                style={{ width: '60%' }}
-                className={classes.selectEmpty}
-              />
-            </div>
-
-            <div className={classes.row3}>
-              <CustomTextInput
-                label='Source'
-                value={source}
-                onChange={setSource}
-                variant='outlined'
-                required
-                className={classes.selectEmpty}
-              />
-            </div>
-          </form>
+          <ResourceInfo
+            {...{
+              name,
+              setName,
+              contact,
+              setContact,
+              location,
+              setLocation,
+              info,
+              setInfo,
+              source,
+              setSource,
+              handleSubmitForm,
+            }}
+          />
 
           <div className={classes.rootButton}>
             <div className={classes.wrapper}>
@@ -236,23 +190,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '10%',
     marginTop: '2%',
     marginBottom: '10%',
-  },
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-  row1: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  row2: {},
-  row3: {},
-  selectEmpty: {
-    width: '31%',
-    marginTop: theme.spacing(2),
   },
   buttonProgress: {
     color: green[500],
