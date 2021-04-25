@@ -43,7 +43,7 @@ export const FAQ = {
 		},
 		{
 			answer:
-				'We need volunteers who can help us stregthen this initiative together. We would be delighted if you could add relavant data to this initiative via Add Info. We need help in terms of Data Collection, Data Verification, Front-End and Back-End Development, Social Media to name a few. We would be grateful if you join to help us. Join us at: <a href="http://discord.getcovidhelp.in/" target="_blank">discord.getcovidhelp.in/</a>',
+				'We need volunteers who can help us strengthen this initiative together. We would be delighted if you could add relavant data to this initiative via Add Info. We need help in terms of Data Collection, Data Verification, Front-End and Back-End Development, Social Media to name a few. We would be grateful if you join to help us. Join us at: <a href="http://discord.getcovidhelp.in/" target="_blank">discord.getcovidhelp.in/</a>',
 			qno: '7',
 			question: 'How can I help?',
 		},
