@@ -7,6 +7,12 @@ export const FAQ = {
 		},
 		{
 			answer:
+				'We made every attempt to ensure the accuracy and reliability of the information provided. Kindly check and verify any/all information before acting upon the same. Always seek medical advice and refrain from self-diagnosis.',
+			qno: '1',
+			question: 'Disclaimer and Guide',
+		},
+		{
+			answer:
 				'We are aggregating data from social media, volunteer efforts and via the data collection on the website. We would love it if you can use this data in the fight against this virus. ',
 			qno: '2',
 			question: 'What are your sources? How is the data gathered for this project?',
