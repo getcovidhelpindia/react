@@ -14,6 +14,7 @@ import { retry } from 'utils';
 // Lazy load components: Code Splitting
 const Home = lazy(() => retry(() => import('screens/Page')));
 const AddInfo = lazy(() => retry(() => import('screens/AddInfo')));
+const AddInfo2 = lazy(() => retry(() => import('screens/AddInfo2')));
 const About = lazy(() => retry(() => import('screens/About')));
 const Admin = lazy(() => retry(() => import('screens/AdminPage')));
 //const State = lazy(() => retry(() => import('components/State')));
@@ -32,6 +33,12 @@ const App = () => {
     {
       pageLink: '/addInfo',
       view: AddInfo,
+      displayName: 'Add Info',
+      showInNavbar: true,
+    },
+    {
+      pageLink: '/addInfo2',
+      view: AddInfo2,
       displayName: 'Add Info',
       showInNavbar: true,
     },

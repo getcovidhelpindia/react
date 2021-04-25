@@ -24,7 +24,7 @@ import clsx from 'clsx';
 import { StatesAndDistricts } from 'assets';
 
 // Components
-import { Layout } from 'components';
+import { Layout, CustomTextInput } from 'components';
 
 const AddInfo = ({ darkMode }) => {
   const classes = useStyles();
@@ -33,8 +33,8 @@ const AddInfo = ({ darkMode }) => {
   const [location, setLocation] = React.useState('');
   const [info, setInfo] = React.useState('');
   const [source, setSource] = React.useState('');
-  const [indiaState, setIndiaState] = React.useState(-1);
-  const [indiaDistrict, setIndiaDistrict] = React.useState(-1);
+  const [indiaState, setIndiaState] = React.useState('');
+  const [indiaDistrict, setIndiaDistrict] = React.useState();
   const [resourceType, setResourceType] = React.useState(-1);
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -139,7 +139,6 @@ const AddInfo = ({ darkMode }) => {
       type: darkMode.value ? 'dark' : 'light',
     },
   };
-
   const themeConfig = createMuiTheme(theme);
 
   return (
@@ -160,32 +159,36 @@ const AddInfo = ({ darkMode }) => {
             }}
           >
             <div>
-              <FormControl
-                required
+              <TextField
+                label='State'
+                select
+                value={indiaState}
+                onChange={handleChangeState}
+                className={classes.selectEmpty}
                 variant='outlined'
-                className={classes.formControl}
+                fullWidth
+                style={{ width: '40%' }}
               >
-                <InputLabel id='demo-simple-select-required-label'>
-                  State
-                </InputLabel>
-                <Select
-                  labelId='demo-simple-select-required-label'
-                  id='demo-simple-select-required'
-                  value={indiaState}
-                  onChange={handleChangeState}
-                  className={classes.selectEmpty}
-                >
-                  <MenuItem value={-1}>
-                    <em>None</em>
-                  </MenuItem>
-                  {StatesAndDistricts.states.map((item, index) => (
-                    <MenuItem value={index}>{item.state}</MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText>Required</FormHelperText>
-              </FormControl>
+                {StatesAndDistricts.states.map((item, index) => (
+                  <MenuItem value={index}>{item.state}</MenuItem>
+                ))}
+              </TextField>
 
-              <FormControl
+              <CustomTextInput
+                value={indiaState}
+                onChange={handleChangeState}
+                label='State'
+                variant='outlined'
+                required
+                select
+                style={{ width: '40%' }}
+              >
+                {StatesAndDistricts.states.map((item, index) => (
+                  <MenuItem value={index}>{item.state}</MenuItem>
+                ))}
+              </CustomTextInput>
+
+              {/* <FormControl
                 required
                 variant='outlined'
                 className={classes.formControl}
@@ -200,9 +203,6 @@ const AddInfo = ({ darkMode }) => {
                   onChange={handleChangeDistrict}
                   className={classes.selectEmpty}
                 >
-                  <MenuItem value={-1}>
-                    <em>None</em>
-                  </MenuItem>
                   {indiaState >= 0 ? (
                     StatesAndDistricts.states[
                       indiaState
@@ -214,7 +214,7 @@ const AddInfo = ({ darkMode }) => {
                   )}
                 </Select>
                 <FormHelperText>Required</FormHelperText>
-              </FormControl>
+              </FormControl> */}
 
               <FormControl
                 required
