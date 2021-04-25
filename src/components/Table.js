@@ -239,7 +239,7 @@ const Table = ({ darkMode }) => {
 						<AgGridColumn
 							field="info"
 							wrapText={true}
-							minWidth={150}
+							minWidth={200}
 							flex={5}
 							filter="agTextColumnFilter"
 							valueGetter={customValueGetter}
@@ -258,6 +258,7 @@ const Table = ({ darkMode }) => {
 							editable={true}
 							wrapText={true}
 							flex={4}
+							minWidth={160}
 							cellEditor="agLargeTextCellEditor"
 							// autoHeight={true}
 							valueGetter={customValueGetterContact}
