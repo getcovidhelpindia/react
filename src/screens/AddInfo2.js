@@ -11,7 +11,7 @@ import { green, red } from '@material-ui/core/colors';
 import clsx from 'clsx';
 
 // Components
-import { Layout, CustomTextInput } from 'components';
+import { Layout, CustomTextInput, SelectStateDisctrict } from 'components';
 
 // Hooks
 import { useInput, useSwitch } from 'hooks';
@@ -115,67 +115,20 @@ const AddInfo = ({ darkMode }) => {
   };
   const themeConfig = createMuiTheme(theme);
 
-  console.log(indiaState);
-
   return (
     <Layout footerClassName={classes.footer}>
       <ThemeProvider theme={themeConfig}>
         <div className={classes.rootDiv}>
-          <div>
-            <CustomTextInput
-              value={indiaState}
-              onChange={setIndiaState}
-              label='State'
-              variant='outlined'
-              required
-              select
-              className={classes.selectEmpty}
-            >
-              {StatesAndDistricts.states.map((item, index) => (
-                <MenuItem key={`States-${index}`} value={index}>
-                  {item.state}
-                </MenuItem>
-              ))}
-            </CustomTextInput>
-
-            <CustomTextInput
-              value={indiaDistrict}
-              onChange={setIndiaDistrict}
-              label='District'
-              variant='outlined'
-              required
-              select
-              className={classes.selectEmpty}
-            >
-              {indiaState > 0 ? (
-                StatesAndDistricts.states[indiaState].districts.map(
-                  (item, index) => (
-                    <MenuItem key={`Districts-${index}`} value={index}>
-                      {item}
-                    </MenuItem>
-                  )
-                )
-              ) : (
-                <div />
-              )}
-            </CustomTextInput>
-
-            <CustomTextInput
-              value={resourceType}
-              onChange={setResourceType}
-              label='Resource Type'
-              variant='outlined'
-              required
-              select
-              className={classes.selectEmpty}
-            >
-              <MenuItem value={0}>Oxygen</MenuItem>
-              <MenuItem value={1}>Medicines</MenuItem>
-              <MenuItem value={2}>Plasma Donor</MenuItem>
-              <MenuItem value={3}>Hospital Bed</MenuItem>
-              <MenuItem value={4}>Testing Facility</MenuItem>
-            </CustomTextInput>
-          </div>
+          <SelectStateDisctrict
+            {...{
+              indiaState,
+              setIndiaState,
+              indiaDistrict,
+              setIndiaDistrict,
+              resourceType,
+              setResourceType,
+            }}
+          />
 
           <form
             className={classes.root}
