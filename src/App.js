@@ -1,4 +1,4 @@
-import './App.scss';
+import 'App.scss';
 
 // Libraries
 import { lazy, Suspense } from 'react';
@@ -6,17 +6,17 @@ import { Route, Redirect, Switch, useLocation } from 'react-router-dom';
 import useDarkMode from 'use-dark-mode';
 
 // Components
-import { Navbar } from './components/marginals';
+import { Navbar } from 'components';
 
 // Utilities
-import { retry } from './utils';
+import { retry } from 'utils';
 
 // Lazy load components: Code Splitting
-const Home = lazy(() => retry(() => import('./screens/Page')));
-const AddInfo = lazy(() => retry(() => import('./screens/AddInfo')));
-const About = lazy(() => retry(() => import('./screens/About')));
-const Admin = lazy(() => retry(() => import('./screens/AdminPage')));
-//const State = lazy(() => retry(() => import('./components/State')));
+const Home = lazy(() => retry(() => import('screens/Page')));
+const AddInfo = lazy(() => retry(() => import('screens/AddInfo')));
+const About = lazy(() => retry(() => import('screens/About')));
+const Admin = lazy(() => retry(() => import('screens/AdminPage')));
+//const State = lazy(() => retry(() => import('components/State')));
 
 const App = () => {
   const darkMode = useDarkMode(false);

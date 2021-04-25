@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
+
+// Libraries
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import {
+  createMuiTheme,
+  ThemeProvider,
+  makeStyles,
+} from '@material-ui/core/styles';
+import {
+  InputLabel,
+  MenuItem,
+  FormHelperText,
+  FormControl,
+  Select,
+} from '@material-ui/core';
 
-import clsx from 'clsx';
-
+// CSS
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 
-import { InfoCellRenderer, CreatedAtCellRenderer } from './CellRenderer';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
-import { StatesAndDistricts } from '../assets';
-import Checkbox from '@material-ui/core/Checkbox';
+// Components
+import { InfoCellRenderer, CreatedAtCellRenderer } from 'components';
+
+// Assets
+import { StatesAndDistricts } from 'assets';
 
 const useStyles = makeStyles((theme) => ({
   root: {

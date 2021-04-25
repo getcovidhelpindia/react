@@ -1,11 +1,15 @@
-import { animations } from '../../utils';
-
 import { useState, useCallback, useRef } from 'react';
+
+// Libraries
 import { FilePlus, HelpCircle, Home, Moon, Sun } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useTransition, animated } from 'react-spring';
 import { useLockBodyScroll, useWindowSize } from 'react-use';
 
+// Utilies
+import { animations } from 'utils';
+
+// Constants
 const { SLIDE_IN, SLIDE_OUT, SLIDE_IN_MOBILE, SLIDE_OUT_MOBILE } = animations;
 
 function Navbar({ pages, darkMode }) {

@@ -3,8 +3,7 @@ import { Fab } from '@material-ui/core';
 import { Share } from 'react-feather';
 
 // Components
-import Footer from './Footer';
-import { FABClick } from '../Table';
+import { Footer, FABClick } from 'components';
 
 const Layout = ({ children, footerClassName, enableFab = false }) => (
   <>

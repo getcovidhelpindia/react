@@ -1,6 +1,5 @@
 // Components
-import { Layout } from '../components/marginals';
-import Table from '../components/Table';
+import { Layout, Table } from 'components';
 
 function App({ darkMode }) {
   return (

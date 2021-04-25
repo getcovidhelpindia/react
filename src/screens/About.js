@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
 // Components
-import { Layout } from '../components/marginals';
+import { Layout } from 'components';
 
 // Utilities
-import { FAQ } from '../assets';
+import { FAQ } from 'assets';
 // TODO(slightlyoff): factor out common JSON parsing & caching of this file
 
 function About() {
