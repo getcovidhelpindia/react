@@ -6,76 +6,56 @@ import {
   createMuiTheme,
   ThemeProvider,
 } from '@material-ui/core/styles';
-import {
-  TextField,
-  InputLabel,
-  MenuItem,
-  FormHelperText,
-  FormControl,
-  Select,
-  Button,
-  CircularProgress,
-} from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 import clsx from 'clsx';
-// import ReCAPTCHA from 'react-google-recaptcha';
+
+// Components
+import { Layout, CustomTextInput, SelectStateDisctrict } from 'components';
+
+// Hooks
+import { useInput, useSwitch } from 'hooks';
 
 // Assets
 import { StatesAndDistricts } from 'assets';
 
-// Components
-import { Layout, CustomTextInput } from 'components';
-
 const AddInfo = ({ darkMode }) => {
   const classes = useStyles();
-  const [name, setName] = React.useState('');
-  const [contact, setContact] = React.useState('');
-  const [location, setLocation] = React.useState('');
-  const [info, setInfo] = React.useState('');
-  const [source, setSource] = React.useState('');
-  const [indiaState, setIndiaState] = React.useState('');
-  const [indiaDistrict, setIndiaDistrict] = React.useState();
-  const [resourceType, setResourceType] = React.useState(-1);
-  const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
-  const [failure, setFailure] = React.useState(false);
+
+  // States
+  const [name, setName, resetName] = useInput('');
+  const [contact, setContact, resetContact] = useInput('');
+  const [location, setLocation, resetLocation] = useInput('');
+  const [info, setInfo, resetInfo] = useInput('');
+  const [source, setSource, resetSource] = useInput('');
+  const [indiaState, setIndiaState, resetIndiaState] = useInput('');
+  const [indiaDistrict, setIndiaDistrict, resetIndiaDistrict] = useInput('');
+  const [resourceType, setResourceType, resetResourceType] = useInput('');
+
+  // Switches
+  const [loading, openLoading, closeLoading] = useSwitch(false);
+  const [success, openSuccess, closeSuccess] = useSwitch(false);
+  const [failure, openFailure, closeFailure] = useSwitch(false);
+
   const buttonClassname = clsx({
     [classes.buttonSuccess]: success,
     [classes.buttonFailure]: failure,
   });
 
-  const handleChangeState = (event) => {
-    setIndiaState(event.target.value);
-    setIndiaDistrict(-1);
+  const resetAll = () => {
+    resetName();
+    resetContact();
+    resetLocation();
+    resetInfo();
+    resetSource();
+    resetIndiaState();
+    resetIndiaDistrict();
+    resetResourceType();
   };
-  const handleChangeDistrict = (event) => {
-    setIndiaDistrict(event.target.value);
-  };
-  const handleChangeResourceType = (event) => {
-    setResourceType(event.target.value);
-  };
-  const handleChangeName = (event) => {
-    setName(event.target.value);
-  };
-  const handleChangeContact = (event) => {
-    setContact(event.target.value);
-  };
-  const handleChangeLocation = (event) => {
-    setLocation(event.target.value);
-  };
-  const handleChangeInfo = (event) => {
-    setInfo(event.target.value);
-  };
-  const handleChangeSource = (event) => {
-    setSource(event.target.value);
-  };
-  const handleSubmitForm = (event) => {
-    event.preventDefault();
-  };
+
+  const handleSubmitForm = (event) => event.preventDefault();
   const dataSubmit = (event) => {
-    if (!loading) {
-      setLoading(true);
-    }
+    if (!loading) openLoading();
     try {
       const payload = {
         state: StatesAndDistricts.states[indiaState].state,
@@ -105,35 +85,29 @@ const AddInfo = ({ darkMode }) => {
         .then((result) => {
           console.log('response', result);
           if (result.success) {
-            setLoading(false);
-            setSuccess(true);
+            closeLoading();
+            openSuccess();
             setTimeout(() => {
-              setName('');
-              setContact('');
-              setLocation('');
-              setInfo('');
-              setSource('');
-              setIndiaState(-1);
-              setIndiaDistrict(-1);
-              setResourceType(-1);
-              setSuccess(false);
+              resetAll();
+              closeSuccess();
             }, 2000);
           } else {
-            setLoading(false);
-            setFailure(true);
+            closeLoading();
+            closeFailure();
             setTimeout(() => {
-              setFailure(false);
+              closeFailure();
             }, 2000);
           }
         });
     } catch (err) {
-      setFailure(true);
-      setLoading(false);
+      openFailure();
+      closeLoading();
       setTimeout(() => {
-        setFailure(false);
+        openFailure();
       }, 2000);
     }
   };
+
   const theme = {
     palette: {
       type: darkMode.value ? 'dark' : 'light',
@@ -143,191 +117,110 @@ const AddInfo = ({ darkMode }) => {
 
   return (
     <Layout footerClassName={classes.footer}>
-      <div
-        style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}
-      >
-        <ThemeProvider theme={themeConfig}>
-          <div
-            style={{
-              height: '40rem',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'left',
-              marginLeft: '10%',
-              marginTop: '2%',
-              marginBottom: '10%',
+      <ThemeProvider theme={themeConfig}>
+        <div className={classes.rootDiv}>
+          <SelectStateDisctrict
+            {...{
+              indiaState,
+              setIndiaState,
+              indiaDistrict,
+              setIndiaDistrict,
+              resourceType,
+              setResourceType,
             }}
+          />
+
+          <form
+            className={classes.root}
+            noValidate
+            autoComplete='off'
+            onSubmit={handleSubmitForm}
           >
-            <div>
-              <TextField
-                label='State'
-                select
-                value={indiaState}
-                onChange={handleChangeState}
-                className={classes.selectEmpty}
-                variant='outlined'
-                fullWidth
-                style={{ width: '40%' }}
-              >
-                {StatesAndDistricts.states.map((item, index) => (
-                  <MenuItem value={index}>{item.state}</MenuItem>
-                ))}
-              </TextField>
-
+            <div className={classes.formRow1}>
               <CustomTextInput
-                value={indiaState}
-                onChange={handleChangeState}
-                label='State'
-                variant='outlined'
-                required
-                select
-                style={{ width: '40%' }}
-              >
-                {StatesAndDistricts.states.map((item, index) => (
-                  <MenuItem value={index}>{item.state}</MenuItem>
-                ))}
-              </CustomTextInput>
-
-              {/* <FormControl
-                required
-                variant='outlined'
-                className={classes.formControl}
-              >
-                <InputLabel id='demo-simple-select-required-label'>
-                  District
-                </InputLabel>
-                <Select
-                  labelId='demo-simple-select-required-label'
-                  id='demo-simple-select-required'
-                  value={indiaDistrict}
-                  onChange={handleChangeDistrict}
-                  className={classes.selectEmpty}
-                >
-                  {indiaState >= 0 ? (
-                    StatesAndDistricts.states[
-                      indiaState
-                    ].districts.map((item, index) => (
-                      <MenuItem value={index}>{item}</MenuItem>
-                    ))
-                  ) : (
-                    <div />
-                  )}
-                </Select>
-                <FormHelperText>Required</FormHelperText>
-              </FormControl> */}
-
-              <FormControl
-                required
-                variant='outlined'
-                className={classes.formControl}
-              >
-                <InputLabel id='demo-simple-select-required-label'>
-                  Resource Type
-                </InputLabel>
-                <Select
-                  labelId='demo-simple-select-required-label'
-                  id='demo-simple-select-required'
-                  value={resourceType}
-                  onChange={handleChangeResourceType}
-                  className={classes.selectEmpty}
-                >
-                  <MenuItem value={-1}>
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={0}>Oxygen</MenuItem>
-                  <MenuItem value={1}>Medicines</MenuItem>
-                  <MenuItem value={2}>Plasma Donor</MenuItem>
-                  <MenuItem value={3}>Hospital Bed</MenuItem>
-                  <MenuItem value={4}>Testing Facility</MenuItem>
-                </Select>
-                <FormHelperText>Required</FormHelperText>
-              </FormControl>
-            </div>
-            <form
-              className={classes.root}
-              noValidate
-              autoComplete='off'
-              onSubmit={handleSubmitForm}
-            >
-              <TextField
-                id='outlined-multiline-flexible'
                 label='Name'
                 value={name}
-                onChange={handleChangeName}
+                onChange={setName}
                 variant='outlined'
+                required
+                className={classes.selectEmpty}
+                style={{ width: '19.2%' }}
               />
-              <TextField
-                id='outlined-multiline-flexible'
+              <CustomTextInput
                 label='Contact'
                 value={contact}
-                onChange={handleChangeContact}
+                onChange={setContact}
                 variant='outlined'
+                required
+                className={classes.selectEmpty}
+                style={{ width: '19.2%' }}
               />
-              <TextField
-                id='outlined-multiline-flexible'
+              <CustomTextInput
                 label='Location'
                 value={location}
-                onChange={handleChangeLocation}
+                onChange={setLocation}
                 variant='outlined'
+                required
+                className={classes.selectEmpty}
+                style={{ width: '19.2%' }}
               />
-            </form>
-            <form
-              className={classes.root}
-              noValidate
-              autoComplete='off'
-              onSubmit={handleSubmitForm}
-            >
-              <TextField
-                id='outlined-multiline-flexible'
+            </div>
+
+            <div className={classes.row2}>
+              <CustomTextInput
                 label='Information'
                 value={info}
-                onChange={handleChangeInfo}
+                onChange={setInfo}
                 variant='outlined'
+                required
+                multiline
+                fullWidth
+                style={{ width: '60%' }}
+                className={classes.selectEmpty}
               />
-            </form>
-            <form
-              className={classes.root}
-              noValidate
-              autoComplete='off'
-              onSubmit={handleSubmitForm}
-            >
-              <TextField
-                id='outlined-multiline-flexible'
+            </div>
+
+            <div className={classes.row3}>
+              <CustomTextInput
                 label='Source'
                 value={source}
-                onChange={handleChangeSource}
+                onChange={setSource}
                 variant='outlined'
+                required
+                className={classes.selectEmpty}
               />
-            </form>
-            <div className={classes.rootButton}>
-              <div className={classes.wrapper}>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={dataSubmit}
-                  disabled={loading}
-                  className={buttonClassname}
-                >
-                  Submit
-                </Button>
-                {loading && (
-                  <CircularProgress
-                    size={24}
-                    className={classes.buttonProgress}
-                  />
-                )}
-              </div>
             </div>
-            <div>
-              <p>
-                Data once added is approved by one of the team members before it
-                comes on website. To know more, visit{' '}
-                <a href='/about'>About Section</a>
-              </p>
+          </form>
+
+          <div className={classes.rootButton}>
+            <div className={classes.wrapper}>
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={dataSubmit}
+                disabled={loading}
+                className={buttonClassname}
+              >
+                Submit
+              </Button>
+              {loading && (
+                <CircularProgress
+                  size={24}
+                  className={classes.buttonProgress}
+                />
+              )}
             </div>
           </div>
-        </ThemeProvider>
-      </div>
+
+          <div>
+            <p>
+              Data once added is approved by one of the team members before it
+              comes on website. To know more, visit{' '}
+              <a href='/about'>About Section</a>
+            </p>
+          </div>
+        </div>
+      </ThemeProvider>
     </Layout>
   );
 };
@@ -335,11 +228,31 @@ const AddInfo = ({ darkMode }) => {
 export default AddInfo;
 
 const useStyles = makeStyles((theme) => ({
+  rootDiv: {
+    height: '40rem',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'left',
+    marginLeft: '10%',
+    marginTop: '2%',
+    marginBottom: '10%',
+  },
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
       width: '25ch',
     },
+  },
+  row1: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  row2: {},
+  row3: {},
+  selectEmpty: {
+    width: '31%',
+    marginTop: theme.spacing(2),
   },
   buttonProgress: {
     color: green[500],
@@ -372,9 +285,6 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
   },
   footer: {
     top: 'auto',
