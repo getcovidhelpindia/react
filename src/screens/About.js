@@ -1,4 +1,4 @@
-import Footer from './Footer';
+import Footer from '../components/Footer';
 import { useState, useEffect } from 'react';
 import { FAQ } from '../assets';
 // TODO(slightlyoff): factor out common JSON parsing & caching of this file
