@@ -9,6 +9,7 @@ import {
 import { Button, CircularProgress } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 import clsx from 'clsx';
+import axios from 'axios';
 
 // Components
 import { Layout, SelectStateDisctrict, ResourceInfo } from 'components';
@@ -53,58 +54,67 @@ const AddInfo = ({ darkMode }) => {
     resetResourceType();
   };
 
-  const handleSubmitForm = (event) => event.preventDefault();
-  const dataSubmit = (event) => {
+  const verifyForm = () => {
     if (!loading) openLoading();
+    if (
+      !indiaState |
+      !indiaDistrict |
+      !resourceType |
+      !name |
+      !contact |
+      !location |
+      !info |
+      !source
+    )
+      alert('Please fill in all the details.');
+  };
+
+  const setIndicators = (cb, overide) => {
+    closeLoading();
+    cb();
+    setTimeout(overide, 2000);
+  };
+
+  const handleSubmitForm = (event) => event.preventDefault();
+  const dataSubmit = async () => {
+    verifyForm();
+    const state = StatesAndDistricts.states[indiaState].state;
+    const district =
+      StatesAndDistricts.states[indiaState].districts[indiaDistrict];
+    const payload = {
+      state,
+      district,
+      type: resourceType,
+      info: {
+        name: name,
+        contact: contact,
+        description: info,
+        location: location,
+      },
+      source,
+      createdAt: new Date(),
+      isApproved: true,
+      isFlagged: false,
+      usefulness: 0,
+      isHidden: false,
+    };
+
     try {
-      const payload = {
-        state: StatesAndDistricts.states[indiaState].state,
-        district:
-          StatesAndDistricts.states[indiaState].districts[indiaDistrict],
-        type: resourceType,
-        info: {
-          name: name,
-          contact: contact,
-          description: info,
-          location: location,
-        },
-        source: source,
-        createdAt: new Date(),
-        isApproved: true,
-        isFlagged: false,
-        usefulness: 0,
-        isHidden: false,
-      };
-      console.log(JSON.stringify(payload));
-      const requestOptions = {
-        method: 'POST',
-        body: JSON.stringify(payload),
-      };
-      fetch('https://api.getcovidhelp.in/addData', requestOptions)
-        .then((res) => res.json())
-        .then((result) => {
-          console.log('response', result);
-          if (result.success) {
-            closeLoading();
-            openSuccess();
-            setTimeout(() => {
-              resetAll();
-              closeSuccess();
-            }, 2000);
-          } else {
-            closeLoading();
-            closeFailure();
-            setTimeout(() => {
-              closeFailure();
-            }, 2000);
-          }
+      const { success } = await axios.post(
+        'https://api.getcovidhelp.in/addData',
+        payload
+      );
+
+      if (success) {
+        setIndicators(openSuccess, () => {
+          resetAll();
+          closeSuccess();
         });
-    } catch (err) {
-      openFailure();
-      closeLoading();
-      setTimeout(() => {
-        openFailure();
-      }, 2000);
+      } else {
+        setIndicators(closeFailure);
+      }
+    } catch (error) {
+      setIndicators(openFailure);
     }
   };
 
