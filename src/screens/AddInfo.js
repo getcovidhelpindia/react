@@ -8,12 +8,15 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-import Footer from '../components/Footer';
+import Footer from '../components/marginals/Footer';
 import { StatesAndDistricts } from '../assets';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green, red } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import ReCAPTCHA from 'react-google-recaptcha';
+
+// Components
+import { Layout } from '../components/marginals';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  footer: {
+    top: 'auto',
   },
 }));
 
@@ -176,188 +182,191 @@ export default function MultilineTextFields({ darkMode }) {
   const themeConfig = createMuiTheme(theme);
 
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <ThemeProvider theme={themeConfig}>
-        <div
-          style={{
-            height: '40rem',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'left',
-            marginLeft: '10%',
-            marginTop: '2%',
-            marginBottom: '10%',
-          }}
-        >
-          <div>
-            <FormControl
-              required
-              variant='outlined'
-              className={classes.formControl}
-            >
-              <InputLabel id='demo-simple-select-required-label'>
-                State
-              </InputLabel>
-              <Select
-                labelId='demo-simple-select-required-label'
-                id='demo-simple-select-required'
-                value={indiaState}
-                onChange={handleChangeState}
-                className={classes.selectEmpty}
+    <Layout footerClassName={classes.footer}>
+      <div
+        style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}
+      >
+        <ThemeProvider theme={themeConfig}>
+          <div
+            style={{
+              height: '40rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'left',
+              marginLeft: '10%',
+              marginTop: '2%',
+              marginBottom: '10%',
+            }}
+          >
+            <div>
+              <FormControl
+                required
+                variant='outlined'
+                className={classes.formControl}
               >
-                <MenuItem value={-1}>
-                  <em>None</em>
-                </MenuItem>
-                {StatesAndDistricts.states.map((item, index) => (
-                  <MenuItem value={index}>{item.state}</MenuItem>
-                ))}
-              </Select>
-              <FormHelperText>Required</FormHelperText>
-            </FormControl>
+                <InputLabel id='demo-simple-select-required-label'>
+                  State
+                </InputLabel>
+                <Select
+                  labelId='demo-simple-select-required-label'
+                  id='demo-simple-select-required'
+                  value={indiaState}
+                  onChange={handleChangeState}
+                  className={classes.selectEmpty}
+                >
+                  <MenuItem value={-1}>
+                    <em>None</em>
+                  </MenuItem>
+                  {StatesAndDistricts.states.map((item, index) => (
+                    <MenuItem value={index}>{item.state}</MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>Required</FormHelperText>
+              </FormControl>
 
-            <FormControl
-              required
-              variant='outlined'
-              className={classes.formControl}
-            >
-              <InputLabel id='demo-simple-select-required-label'>
-                District
-              </InputLabel>
-              <Select
-                labelId='demo-simple-select-required-label'
-                id='demo-simple-select-required'
-                value={indiaDistrict}
-                onChange={handleChangeDistrict}
-                className={classes.selectEmpty}
+              <FormControl
+                required
+                variant='outlined'
+                className={classes.formControl}
               >
-                <MenuItem value={-1}>
-                  <em>None</em>
-                </MenuItem>
-                {indiaState >= 0 ? (
-                  StatesAndDistricts.states[
-                    indiaState
-                  ].districts.map((item, index) => (
-                    <MenuItem value={index}>{item}</MenuItem>
-                  ))
-                ) : (
-                  <div />
+                <InputLabel id='demo-simple-select-required-label'>
+                  District
+                </InputLabel>
+                <Select
+                  labelId='demo-simple-select-required-label'
+                  id='demo-simple-select-required'
+                  value={indiaDistrict}
+                  onChange={handleChangeDistrict}
+                  className={classes.selectEmpty}
+                >
+                  <MenuItem value={-1}>
+                    <em>None</em>
+                  </MenuItem>
+                  {indiaState >= 0 ? (
+                    StatesAndDistricts.states[
+                      indiaState
+                    ].districts.map((item, index) => (
+                      <MenuItem value={index}>{item}</MenuItem>
+                    ))
+                  ) : (
+                    <div />
+                  )}
+                </Select>
+                <FormHelperText>Required</FormHelperText>
+              </FormControl>
+
+              <FormControl
+                required
+                variant='outlined'
+                className={classes.formControl}
+              >
+                <InputLabel id='demo-simple-select-required-label'>
+                  Resource Type
+                </InputLabel>
+                <Select
+                  labelId='demo-simple-select-required-label'
+                  id='demo-simple-select-required'
+                  value={resourceType}
+                  onChange={handleChangeResourceType}
+                  className={classes.selectEmpty}
+                >
+                  <MenuItem value={-1}>
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={0}>Oxygen</MenuItem>
+                  <MenuItem value={1}>Medicines</MenuItem>
+                  <MenuItem value={2}>Plasma Donor</MenuItem>
+                  <MenuItem value={3}>Hospital Bed</MenuItem>
+                  <MenuItem value={4}>Testing Facility</MenuItem>
+                </Select>
+                <FormHelperText>Required</FormHelperText>
+              </FormControl>
+            </div>
+            <form
+              className={classes.root}
+              noValidate
+              autoComplete='off'
+              onSubmit={handleSubmitForm}
+            >
+              <TextField
+                id='outlined-multiline-flexible'
+                label='Name'
+                value={name}
+                onChange={handleChangeName}
+                variant='outlined'
+              />
+              <TextField
+                id='outlined-multiline-flexible'
+                label='Contact'
+                value={contact}
+                onChange={handleChangeContact}
+                variant='outlined'
+              />
+              <TextField
+                id='outlined-multiline-flexible'
+                label='Location'
+                value={location}
+                onChange={handleChangeLocation}
+                variant='outlined'
+              />
+            </form>
+            <form
+              className={classes.root}
+              noValidate
+              autoComplete='off'
+              onSubmit={handleSubmitForm}
+            >
+              <TextField
+                id='outlined-multiline-flexible'
+                label='Information'
+                value={info}
+                onChange={handleChangeInfo}
+                variant='outlined'
+              />
+            </form>
+            <form
+              className={classes.root}
+              noValidate
+              autoComplete='off'
+              onSubmit={handleSubmitForm}
+            >
+              <TextField
+                id='outlined-multiline-flexible'
+                label='Source'
+                value={source}
+                onChange={handleChangeSource}
+                variant='outlined'
+              />
+            </form>
+            <div className={classes.rootButton}>
+              <div className={classes.wrapper}>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={dataSubmit}
+                  disabled={loading}
+                  className={buttonClassname}
+                >
+                  Submit
+                </Button>
+                {loading && (
+                  <CircularProgress
+                    size={24}
+                    className={classes.buttonProgress}
+                  />
                 )}
-              </Select>
-              <FormHelperText>Required</FormHelperText>
-            </FormControl>
-
-            <FormControl
-              required
-              variant='outlined'
-              className={classes.formControl}
-            >
-              <InputLabel id='demo-simple-select-required-label'>
-                Resource Type
-              </InputLabel>
-              <Select
-                labelId='demo-simple-select-required-label'
-                id='demo-simple-select-required'
-                value={resourceType}
-                onChange={handleChangeResourceType}
-                className={classes.selectEmpty}
-              >
-                <MenuItem value={-1}>
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={0}>Oxygen</MenuItem>
-                <MenuItem value={1}>Medicines</MenuItem>
-                <MenuItem value={2}>Plasma Donor</MenuItem>
-                <MenuItem value={3}>Hospital Bed</MenuItem>
-                <MenuItem value={4}>Testing Facility</MenuItem>
-              </Select>
-              <FormHelperText>Required</FormHelperText>
-            </FormControl>
-          </div>
-          <form
-            className={classes.root}
-            noValidate
-            autoComplete='off'
-            onSubmit={handleSubmitForm}
-          >
-            <TextField
-              id='outlined-multiline-flexible'
-              label='Name'
-              value={name}
-              onChange={handleChangeName}
-              variant='outlined'
-            />
-            <TextField
-              id='outlined-multiline-flexible'
-              label='Contact'
-              value={contact}
-              onChange={handleChangeContact}
-              variant='outlined'
-            />
-            <TextField
-              id='outlined-multiline-flexible'
-              label='Location'
-              value={location}
-              onChange={handleChangeLocation}
-              variant='outlined'
-            />
-          </form>
-          <form
-            className={classes.root}
-            noValidate
-            autoComplete='off'
-            onSubmit={handleSubmitForm}
-          >
-            <TextField
-              id='outlined-multiline-flexible'
-              label='Information'
-              value={info}
-              onChange={handleChangeInfo}
-              variant='outlined'
-            />
-          </form>
-          <form
-            className={classes.root}
-            noValidate
-            autoComplete='off'
-            onSubmit={handleSubmitForm}
-          >
-            <TextField
-              id='outlined-multiline-flexible'
-              label='Source'
-              value={source}
-              onChange={handleChangeSource}
-              variant='outlined'
-            />
-          </form>
-          <div className={classes.rootButton}>
-            <div className={classes.wrapper}>
-              <Button
-                variant='contained'
-                color='primary'
-                onClick={dataSubmit}
-                disabled={loading}
-                className={buttonClassname}
-              >
-                Submit
-              </Button>
-              {loading && (
-                <CircularProgress
-                  size={24}
-                  className={classes.buttonProgress}
-                />
-              )}
+              </div>
+            </div>
+            <div>
+              <p>
+                Data once added is approved by one of the team members before it
+                comes on website. To know more, visit{' '}
+                <a href='/about'>About Section</a>
+              </p>
             </div>
           </div>
-          <div>
-            <p>
-              Data once added is approved by one of the team members before it
-              comes on website. To know more, visit{' '}
-              <a href='/about'>About Section</a>
-            </p>
-          </div>
-        </div>
-      </ThemeProvider>
-      <Footer style={{ top: 'auto' }} />
-    </div>
+        </ThemeProvider>
+      </div>
+    </Layout>
   );
 }

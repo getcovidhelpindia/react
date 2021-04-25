@@ -1,4 +1,4 @@
-import { animations } from '../utils';
+import { animations } from '../../utils';
 
 import { useState, useCallback, useRef } from 'react';
 import { FilePlus, HelpCircle, Home, Moon, Sun } from 'react-feather';

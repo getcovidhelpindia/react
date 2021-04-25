@@ -6,7 +6,7 @@ import { Route, Redirect, Switch, useLocation } from 'react-router-dom';
 import useDarkMode from 'use-dark-mode';
 
 // Components
-import Navbar from './components/Navbar';
+import { Navbar } from './components/marginals';
 
 // Utilities
 import { retry } from './utils';
