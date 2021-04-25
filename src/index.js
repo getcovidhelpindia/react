@@ -1,12 +1,10 @@
-import { retry } from './utils/commonFunctions';
-
 // Libraries
 import { Suspense, lazy, StrictMode } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 // Utilities
-import loadScript from './utils/loadScript';
+import { loadScript, retry } from './utils';
 
 // Components
 const App = lazy(() => retry(() => import('./App')));
