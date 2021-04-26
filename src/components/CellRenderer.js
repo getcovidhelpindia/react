@@ -8,19 +8,6 @@ import rehypeRaw from 'rehype-raw';
 
 export const InfoCellRenderer = (props) => {
   const cellValue = props.valueFormatted ? props.valueFormatted : props.value;
-  // 	const markdown = `
-  // ##### Name
-  // ~~~
-  // aadssadsa
-  // ~~~
-  // ## Contact
-  // ${cellValue.contact}
-  // ## Info
-  // ${cellValue.description}
-  // https://ac.om
-  // ## Location
-  // ${cellValue.location}
-  // `;
 
   return (
     <div style={{ height: '100' }}>

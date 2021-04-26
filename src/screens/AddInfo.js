@@ -82,18 +82,13 @@ const AddInfo = ({ darkMode }) => {
       state,
       district,
       type: resourceType,
+      source,
       info: {
         name: name,
         contact: contact,
         description: info,
         location: location,
       },
-      source,
-      createdAt: new Date(),
-      isApproved: true,
-      isFlagged: false,
-      usefulness: 0,
-      isHidden: false,
     };
 
     try {
