@@ -1,11 +1,7 @@
 import React from 'react';
 
 // Libraries
-import {
-  makeStyles,
-  createMuiTheme,
-  ThemeProvider,
-} from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { Button, CircularProgress } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 import clsx from 'clsx';
@@ -15,7 +11,7 @@ import axios from 'axios';
 import { Layout, SelectStateDisctrict, ResourceInfo } from 'components';
 
 // Hooks
-import { useInput, useSwitch } from 'hooks';
+import { useInput, useSwitch, useTheme } from 'hooks';
 
 // Assets
 import { StatesAndDistricts } from 'assets';
@@ -38,6 +34,7 @@ const AddInfo = ({ darkMode }) => {
   const [success, openSuccess, closeSuccess] = useSwitch(false);
   const [failure, openFailure, closeFailure] = useSwitch(false);
 
+  const themeConfig = useTheme(darkMode);
   const buttonClassname = clsx({
     [classes.buttonSuccess]: success,
     [classes.buttonFailure]: failure,
@@ -100,12 +97,12 @@ const AddInfo = ({ darkMode }) => {
     };
 
     try {
-      const { success } = await axios.post(
+      const { data } = await axios.post(
         'https://api.getcovidhelp.in/addData',
         payload
       );
 
-      if (success) {
+      if (data) {
         setIndicators(openSuccess, () => {
           resetAll();
           closeSuccess();
@@ -117,13 +114,6 @@ const AddInfo = ({ darkMode }) => {
       setIndicators(openFailure);
     }
   };
-
-  const theme = {
-    palette: {
-      type: darkMode.value ? 'dark' : 'light',
-    },
-  };
-  const themeConfig = createMuiTheme(theme);
 
   return (
     <Layout footerClassName={classes.footer}>

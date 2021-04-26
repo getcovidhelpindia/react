@@ -11,6 +11,7 @@ import { CustomTextInput } from 'components';
 import { StatesAndDistricts } from 'assets';
 
 const AddInfo = ({
+  showDistrict = true,
   indiaState,
   setIndiaState,
   indiaDistrict,
@@ -38,25 +39,29 @@ const AddInfo = ({
         ))}
       </CustomTextInput>
 
-      <CustomTextInput
-        value={indiaDistrict}
-        onChange={setIndiaDistrict}
-        label='District'
-        variant='outlined'
-        required
-        select
-        className={classes.selectEmpty}
-      >
-        {indiaState > 0 ? (
-          StatesAndDistricts.states[indiaState].districts.map((item, index) => (
-            <MenuItem key={`Districts-${index}`} value={index}>
-              {item}
-            </MenuItem>
-          ))
-        ) : (
-          <div />
-        )}
-      </CustomTextInput>
+      {showDistrict && (
+        <CustomTextInput
+          value={indiaDistrict}
+          onChange={setIndiaDistrict}
+          label='District'
+          variant='outlined'
+          required
+          select
+          className={classes.selectEmpty}
+        >
+          {indiaState > 0 ? (
+            StatesAndDistricts.states[indiaState].districts.map(
+              (item, index) => (
+                <MenuItem key={`Districts-${index}`} value={index}>
+                  {item}
+                </MenuItem>
+              )
+            )
+          ) : (
+            <div />
+          )}
+        </CustomTextInput>
+      )}
 
       <CustomTextInput
         value={resourceType}
