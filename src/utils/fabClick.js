@@ -6,6 +6,7 @@ const fabClick = (shareArray) => {
   const shareStringEncoded = encodeURIComponent(
     `Sharing useful resource info about COVID19 from https://getcovidhelp.in/ \n ${shareString}`
   );
+
   if (navigator.share) {
     navigator
       .share({
