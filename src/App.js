@@ -54,16 +54,15 @@ const App = () => {
 
       <Suspense fallback={<div />}>
         <Switch location={location}>
-          {pages.map((page, index) => {
-            return (
-              <Route
-                exact
-                path={page.pageLink}
-                render={({ match }) => <page.view darkMode={darkMode} />}
-                key={index}
-              />
-            );
-          })}
+          {pages.map((page, index) => (
+            <Route
+              exact
+              path={page.pageLink}
+              render={() => <page.view darkMode={darkMode} />}
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+            />
+          ))}
           <Redirect to='/' />
         </Switch>
       </Suspense>

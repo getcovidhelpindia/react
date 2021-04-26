@@ -19,18 +19,18 @@ const main = () =>
         </StrictMode>
       </Router>
     </Suspense>,
-    rootElement
+    rootElement,
   );
 
-const browserSupportsAllFeatures = () => {
-  return window.requestIdleCallback && window.IntersectionObserver;
-};
+const browserSupportsAllFeatures = () =>
+  window.requestIdleCallback && window.IntersectionObserver;
 
 if (browserSupportsAllFeatures()) {
   main();
 } else {
   loadScript(
+    // eslint-disable-next-line max-len
     'https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=requestIdleCallback%2CIntersectionObserver',
-    main
+    main,
   );
 }

@@ -16,7 +16,7 @@ function Footer() {
         <a href='/'>getcovidhelpindia</a>
       </div>
 
-      <h5>{'Let us collaborate to help each other in this pandemic'}</h5>
+      <h5>Let us collaborate to help each other in this pandemic</h5>
 
       <div className='links'>
         <a

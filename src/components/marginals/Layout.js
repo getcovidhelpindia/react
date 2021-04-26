@@ -17,7 +17,7 @@ const Layout = ({
   <>
     {children}
 
-    <Footer className={footerClassName ? footerClassName : ''} />
+    <Footer className={footerClassName || ''} />
 
     {enableFab && (
       <Fab

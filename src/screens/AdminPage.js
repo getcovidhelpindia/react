@@ -35,11 +35,12 @@ function AdminPage({ darkMode }) {
       try {
         const { data } = await fetch(
           'https://api.getcovidhelp.in/getData',
-          requestOptions
+          requestOptions,
         ).then((res) => res.json());
 
         const approvedData = data.map((item) => ({
           ...item,
+          // eslint-disable-next-line max-len
           contact: `${item.info.name} \n ${item.info.contact} \n ${item.info.location}`,
           info: item.info.description,
           isSelected: 0,
@@ -47,11 +48,12 @@ function AdminPage({ darkMode }) {
 
         setRowData(approvedData);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(error);
       }
     };
 
-    if (parseInt(indiaState) >= 0 && parseInt(resourceType) >= 0) {
+    if (parseInt(indiaState, 10) >= 0 && parseInt(resourceType, 10) >= 0) {
       setRowData(null);
       fetchData();
     }

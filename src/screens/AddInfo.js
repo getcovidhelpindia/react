@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import React from 'react';
 
 // Libraries
@@ -63,6 +64,7 @@ const AddInfo = ({ darkMode }) => {
       !info |
       !source
     )
+      // eslint-disable-next-line no-alert
       alert('Please fill in all the details.');
   };
 
@@ -75,7 +77,7 @@ const AddInfo = ({ darkMode }) => {
   const handleSubmitForm = (event) => event.preventDefault();
   const dataSubmit = async () => {
     verifyForm();
-    const state = StatesAndDistricts.states[indiaState].state;
+    const { state } = StatesAndDistricts.states[indiaState];
     const district =
       StatesAndDistricts.states[indiaState].districts[indiaDistrict];
     const payload = {
@@ -84,17 +86,17 @@ const AddInfo = ({ darkMode }) => {
       type: resourceType,
       source,
       info: {
-        name: name,
-        contact: contact,
+        name,
+        contact,
         description: info,
-        location: location,
+        location,
       },
     };
 
     try {
       const { data } = await axios.post(
         'https://api.getcovidhelp.in/addData',
-        payload
+        payload,
       );
 
       if (data) {

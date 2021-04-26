@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useState, useCallback, useRef } from 'react';
 
 // Libraries
@@ -36,12 +37,13 @@ function Navbar({ pages, darkMode }) {
     }
   }, [windowSize.width]);
 
-  return navbarTransition((style, item) => (
+  return navbarTransition((style) => (
     <animated.div className='Navbar' {...{ style }}>
       <div
         className='navbar-middle'
         style={{ paddingTop: '1rem', paddingLeft: '0.5rem' }}
       >
+        {/* eslint-disable-next-line react/jsx-no-bind  */}
         <Link to='/' onClick={setExpand.bind(this, false)}>
           Get COVIDHelp
           <br />
@@ -83,12 +85,12 @@ function Navbar({ pages, darkMode }) {
       </div>
 
       {expandTransition(
-        (style, item) =>
+        (itemStyle, item) =>
           item && (
-            <animated.div {...{ style }}>
+            <animated.div {...{ style: itemStyle }}>
               <Expand {...{ pages, setExpand, darkMode, windowSize }} />
             </animated.div>
-          )
+          ),
       )}
     </animated.div>
   ));
@@ -98,7 +100,7 @@ function Expand({ pages, setExpand, darkMode, windowSize }) {
   const expandElement = useRef(null);
 
   const handleMouseLeave = useCallback(() => {
-    windowSize.width > 768 && setExpand(false);
+    if (windowSize.width > 768) setExpand(false);
   }, [setExpand, windowSize.width]);
 
   return (
@@ -108,6 +110,7 @@ function Expand({ pages, setExpand, darkMode, windowSize }) {
           return (
             <Link
               to={page.pageLink}
+              // eslint-disable-next-line react/no-array-index-key
               key={i}
               {...(windowSize.width < 769 && {
                 onClick: setExpand.bind(this, false),
@@ -128,9 +131,8 @@ function Expand({ pages, setExpand, darkMode, windowSize }) {
 
       <div className='expand-bottom'>
         <h5>
-          {
-            'A volunteer aggregation initiative to aid in combating COVID-19 in India.'
-          }
+          A volunteer aggregation initiative to aid in combating COVID-19 in
+          India.
         </h5>
       </div>
     </div>
@@ -139,7 +141,7 @@ function Expand({ pages, setExpand, darkMode, windowSize }) {
 
 export default Navbar;
 
-const navLinkProps = (path, animationDelay) => ({
+const navLinkProps = (path) => ({
   className: `${window.location.pathname === path ? 'focused' : ''}`,
 });
 
@@ -149,10 +151,14 @@ const activeNavIcon = (path) => ({
   },
 });
 
-const SunMoon = ({ darkMode }) => {
-  return (
-    <div className='SunMoon' onClick={darkMode.toggle}>
-      <div>{darkMode.value ? <Sun color={'#ffc107'} /> : <Moon />}</div>
-    </div>
-  );
-};
+const SunMoon = ({ darkMode }) => (
+  <div
+    className='SunMoon'
+    onClick={darkMode.toggle}
+    onKeyDown={darkMode.toggle}
+    role='button'
+    tabIndex='0'
+  >
+    <div>{darkMode.value ? <Sun color='#ffc107' /> : <Moon />}</div>
+  </div>
+);

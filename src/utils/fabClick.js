@@ -1,10 +1,12 @@
 const fabClick = (shareArray) => {
   let shareString = '';
-  for (let row of shareArray) {
-    shareString = shareString + `${row.data.info} at ${row.data.district} \n`;
+  // eslint-disable-next-line no-restricted-syntax
+  for (const row of shareArray) {
+    shareString += `${row.data.info} at ${row.data.district} \n`;
   }
   const shareStringEncoded = encodeURIComponent(
-    `Sharing useful resource info about COVID19 from https://getcovidhelp.in/ \n ${shareString}`
+    // eslint-disable-next-line max-len
+    `Sharing useful resource info about COVID19 from https://getcovidhelp.in/ \n ${shareString}`,
   );
 
   if (navigator.share) {

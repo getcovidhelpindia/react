@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 
 // Libraries
@@ -32,8 +33,8 @@ const TableAdmin = ({ darkMode, rowData, setShareArray }) => {
     >
       <AgGridReact
         rowData={rowData}
-        suppressRowClickSelection={true}
-        rowSelection={'multiple'}
+        suppressRowClickSelection
+        rowSelection='multiple'
         onSelectionChanged={onSelectionChanged}
         frameworkComponents={{
           infoCellRenderer: InfoCellRenderer,
@@ -51,41 +52,41 @@ const TableAdmin = ({ darkMode, rowData, setShareArray }) => {
         <AgGridColumn
           field='district'
           filter='agTextColumnFilter'
-          floatingFilter={true}
-          sortable={true}
-          checkboxSelection={true}
+          floatingFilter
+          sortable
+          checkboxSelection
         />
         <AgGridColumn
           field='info'
-          wrapText={true}
+          wrapText
           minWidth={150}
           flex={1}
           filter='agTextColumnFilter'
-          floatingFilter={true}
-          sortable={true}
-          autoHeight={true}
+          floatingFilter
+          sortable
+          autoHeight
         />
         <AgGridColumn
           field='contact'
           filter='agTextColumnFilter'
-          floatingFilter={true}
-          sortable={true}
-          wrapText={true}
-          autoHeight={true}
+          floatingFilter
+          sortable
+          wrapText
+          autoHeight
         />
         <AgGridColumn
           field='createdAt'
           cellRenderer='createdAtCellRenderer'
           filter='agTextColumnFilter'
-          floatingFilter={true}
-          sortable={true}
+          floatingFilter
+          sortable
         />
         <AgGridColumn
           field='isApproved'
           filter='agTextColumnFilter'
-          floatingFilter={true}
-          sortable={true}
-          editable={true}
+          floatingFilter
+          sortable
+          editable
           cellEditor='agSelectCellEditor'
           cellEditorParams={{
             values: [true, false],
@@ -94,14 +95,14 @@ const TableAdmin = ({ darkMode, rowData, setShareArray }) => {
         <AgGridColumn
           field='verifiedAt'
           filter='agTextColumnFilter'
-          floatingFilter={true}
-          sortable={true}
+          floatingFilter
+          sortable
         />
         <AgGridColumn
           field='isHidden'
           filter='agTextColumnFilter'
-          floatingFilter={true}
-          sortable={true}
+          floatingFilter
+          sortable
         />
       </AgGridReact>
     </div>

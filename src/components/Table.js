@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 
 // Libraries
@@ -34,8 +35,8 @@ const Table = ({ darkMode, rowData, setShareArray }) => {
     >
       <AgGridReact
         rowData={rowData}
-        suppressRowClickSelection={true}
-        rowSelection={'multiple'}
+        suppressRowClickSelection
+        rowSelection='multiple'
         rowHeight={200}
         onSelectionChanged={onSelectionChanged}
         frameworkComponents={{
@@ -54,30 +55,30 @@ const Table = ({ darkMode, rowData, setShareArray }) => {
         <AgGridColumn
           field='district'
           filter='agTextColumnFilter'
-          floatingFilter={true}
-          sortable={true}
-          checkboxSelection={true}
+          floatingFilter
+          sortable
+          checkboxSelection
         />
         <AgGridColumn
           field='info'
-          wrapText={true}
+          wrapText
           minWidth={200}
           flex={5}
           filter='agTextColumnFilter'
           valueGetter={customValueGetter}
           cellRenderer='infoCellRenderer'
-          editable={true}
-          floatingFilter={true}
-          sortable={true}
+          editable
+          floatingFilter
+          sortable
           cellEditor='agLargeTextCellEditor'
         />
         <AgGridColumn
           field='contact'
           filter='agTextColumnFilter'
-          floatingFilter={true}
-          sortable={true}
-          editable={true}
-          wrapText={true}
+          floatingFilter
+          sortable
+          editable
+          wrapText
           flex={4}
           minWidth={160}
           cellEditor='agLargeTextCellEditor'

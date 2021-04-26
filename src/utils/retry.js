@@ -1,5 +1,5 @@
-const retry = (fn, retriesLeft = 5, interval = 1000) => {
-  return new Promise((resolve, reject) => {
+const retry = (fn, retriesLeft = 5, interval = 1000) =>
+  new Promise((resolve, reject) => {
     fn()
       .then(resolve)
       .catch((error) => {
@@ -15,6 +15,5 @@ const retry = (fn, retriesLeft = 5, interval = 1000) => {
         }, interval);
       });
   });
-};
 
 export default retry;

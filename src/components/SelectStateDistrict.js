@@ -33,6 +33,7 @@ const AddInfo = ({
         className={classes.selectEmpty}
       >
         {StatesAndDistricts.states.map((item, index) => (
+          // eslint-disable-next-line react/no-array-index-key
           <MenuItem key={`States-${index}`} value={index}>
             {item.state}
           </MenuItem>
@@ -52,10 +53,11 @@ const AddInfo = ({
           {indiaState > 0 ? (
             StatesAndDistricts.states[indiaState].districts.map(
               (item, index) => (
+                // eslint-disable-next-line react/no-array-index-key
                 <MenuItem key={`Districts-${index}`} value={index}>
                   {item}
                 </MenuItem>
-              )
+              ),
             )
           ) : (
             <div />

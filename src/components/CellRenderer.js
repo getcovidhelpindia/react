@@ -6,25 +6,23 @@ import gfm from 'remark-gfm';
 import moment from 'moment';
 import rehypeRaw from 'rehype-raw';
 
-export const InfoCellRenderer = (props) => {
-  const cellValue = props.valueFormatted ? props.valueFormatted : props.value;
+export const InfoCellRenderer = ({ valueFormatted, value }) => {
+  const cellValue = valueFormatted || value;
 
   return (
     <div style={{ height: '100' }}>
       <ReactMarkdown
         remarkPlugins={[gfm]}
         rehypePlugins={[rehypeRaw]}
+        // eslint-disable-next-line react/no-children-prop
         children={cellValue}
-        skipHtml={true}
+        skipHtml
       />
     </div>
   );
 };
 
-export const customValueSetter = (params) => {
-  console.log(params);
-  return 5;
-};
+export const customValueSetter = () => 5;
 
 export const CreatedAtCellRenderer = (props) => {
   const cellValue = props.valueFormatted ? props.valueFormatted : props.value;
