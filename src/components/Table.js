@@ -21,6 +21,18 @@ const Table = ({ darkMode, rowData, setShareArray }) => {
   const onSelectionChanged = (event) =>
     setShareArray(event.api.getSelectedNodes());
 
+  const setCustomRowHeight = (params) => {
+    const maxLength = Math.max(
+      params.node.data.contact.length,
+      params.node.data.info.length,
+    );
+    const maxLenString =
+      params.node.data.info.length === maxLength
+        ? params.node.data.info
+        : params.node.data.contact;
+    const breakPoints = maxLenString.split('<br/>').length - 1;
+    return maxLength * 1.6 + breakPoints * 2.5;
+  };
   useEffect(() => {
     const themeClassName = darkMode.value
       ? 'ag-theme-alpine-dark'
@@ -37,7 +49,8 @@ const Table = ({ darkMode, rowData, setShareArray }) => {
         rowData={rowData}
         suppressRowClickSelection
         rowSelection='multiple'
-        rowHeight={200}
+        // rowHeight={200}
+        getRowHeight={setCustomRowHeight}
         onSelectionChanged={onSelectionChanged}
         frameworkComponents={{
           infoCellRenderer: InfoCellRenderer,
