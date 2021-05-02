@@ -4,7 +4,12 @@ import { useState, useEffect } from 'react';
 import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
 
 // Components
-import { Layout, Table, SelectStateDisctrict } from 'components';
+import {
+  Layout,
+  Table,
+  SelectStateDisctrict,
+  CustomTextInput,
+} from 'components';
 
 // Hooks
 import { useInput, useTheme } from 'hooks';
@@ -17,7 +22,11 @@ function App({ darkMode }) {
   const [resourceType, setResourceType] = useInput('');
   const [rowData, setRowData] = useState([]);
   const [shareArray, setShareArray] = useState([]);
+  const [filterValue, setFilterValue] = useState('');
 
+  const setFilter = (event) => {
+    setFilterValue(event.target.value);
+  };
   const themeConfig = useTheme(darkMode);
 
   useEffect(() => {
@@ -82,12 +91,21 @@ function App({ darkMode }) {
               showDistrict: false,
             }}
           />
+          <CustomTextInput
+            label='Source'
+            value={filterValue}
+            onChange={setFilter}
+            variant='outlined'
+            required
+            className={classes.selectEmpty}
+          />
 
           <Table
             {...{
               darkMode,
               rowData,
               setShareArray,
+              filterValue,
             }}
           />
         </div>

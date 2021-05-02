@@ -12,8 +12,21 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 // Components
 import { InfoCellRenderer, CreatedAtCellRenderer } from 'components';
 
-const Table = ({ darkMode, rowData, setShareArray }) => {
+const Table = ({ darkMode, rowData, setShareArray, filterValue }) => {
   const [darkThemeClassState, setDarkThemeClassState] = useState('');
+  // eslint-disable-next-line no-unused-vars
+  const [gridApi, setGridApi] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [gridColumnApi, setGridColumnApi] = useState(null);
+
+  const onGridReady = (params) => {
+    setGridApi(params.api);
+    setGridColumnApi(params.columnApi);
+  };
+
+  useEffect(() => {
+    gridApi?.setQuickFilter(filterValue);
+  }, [filterValue]);
 
   // Helper Functions
   const customValueGetter = (params) => params.node.data.info;
@@ -39,6 +52,7 @@ const Table = ({ darkMode, rowData, setShareArray }) => {
         rowSelection='multiple'
         rowHeight={200}
         onSelectionChanged={onSelectionChanged}
+        onGridReady={onGridReady}
         frameworkComponents={{
           infoCellRenderer: InfoCellRenderer,
           createdAtCellRenderer: CreatedAtCellRenderer,
